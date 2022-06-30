@@ -1,6 +1,7 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:quizzler_flutter/quiz_brain.dart';
 
 void main() => runApp(Quizzler());
 
@@ -28,12 +29,8 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Widget> scorekeeper = [];
-  List<String> questions = [
-    'The hijra is the term for the migration of Muhammad and his followers from Mecca to Cairo.',
-    'The language of the Qur’an is Arabic.',
-    'Muslims believe in the coming Day of Judgment.'
-  ];
-  List<bool> answers = [false, true, true];
+
+  Quizbrain quizbrain = Quizbrain();
   int questionnumber = 0;
 
   @override
@@ -48,7 +45,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                questions[questionnumber],
+                quizbrain.paper[questionnumber].questionText,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -73,14 +70,17 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool correctanswer = answers[questionnumber];
+                bool correctanswer =
+                    quizbrain.paper[questionnumber].answerofquestion;
                 if (correctanswer == true) {
                   print("Good");
                 } else {
                   print("Bad");
                 }
                 setState(() {
-                  questionnumber = questionnumber + 1;
+                  if (questionnumber < 2) {
+                    questionnumber = questionnumber + 1;
+                  }
                 });
               },
             ),
@@ -99,14 +99,17 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool correctanswer = answers[questionnumber];
+                bool correctanswer =
+                    quizbrain.paper[questionnumber].answerofquestion;
                 if (correctanswer == false) {
                   print("Good");
                 } else {
                   print("Bad");
                 }
                 setState(() {
-                  questionnumber = questionnumber + 1;
+                  if (questionnumber < 2) {
+                    questionnumber = questionnumber + 1;
+                  }
                 });
               },
             ),
