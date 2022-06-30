@@ -27,6 +27,15 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  List<Widget> scorekeeper = [];
+  List<String> questions = [
+    'The hijra is the term for the migration of Muhammad and his followers from Mecca to Cairo.',
+    'The language of the Qur’an is Arabic.',
+    'Muslims believe in the coming Day of Judgment.'
+  ];
+  List<bool> answers = [false, true, true];
+  int questionnumber = 0;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,7 +48,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                'This is where the question text will go.',
+                questions[questionnumber],
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -64,7 +73,15 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                //The user picked true.
+                bool correctanswer = answers[questionnumber];
+                if (correctanswer == true) {
+                  print("Good");
+                } else {
+                  print("Bad");
+                }
+                setState(() {
+                  questionnumber = questionnumber + 1;
+                });
               },
             ),
           ),
@@ -82,23 +99,20 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                //The user picked false.
+                bool correctanswer = answers[questionnumber];
+                if (correctanswer == false) {
+                  print("Good");
+                } else {
+                  print("Bad");
+                }
+                setState(() {
+                  questionnumber = questionnumber + 1;
+                });
               },
             ),
           ),
         ),
-        Row(
-          children: [
-            Icon(
-              Icons.check,
-              color: Colors.green,
-            ),
-            Icon(
-              Icons.close,
-              color: Colors.red,
-            ),
-          ],
-        )
+        Row(children: scorekeeper)
       ],
     );
   }
