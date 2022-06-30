@@ -45,7 +45,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                quizbrain.paper[questionnumber].questionText,
+                quizbrain.getQuestiontext(questionnumber),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -70,17 +70,14 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool correctanswer =
-                    quizbrain.paper[questionnumber].answerofquestion;
+                bool correctanswer = quizbrain.getanswer(questionnumber);
                 if (correctanswer == true) {
                   print("Good");
                 } else {
                   print("Bad");
                 }
                 setState(() {
-                  if (questionnumber < 2) {
-                    questionnumber = questionnumber + 1;
-                  }
+                  quizbrain.nextquestion();
                 });
               },
             ),
@@ -99,17 +96,14 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool correctanswer =
-                    quizbrain.paper[questionnumber].answerofquestion;
+                bool correctanswer = quizbrain.getanswer(questionnumber);
                 if (correctanswer == false) {
                   print("Good");
                 } else {
                   print("Bad");
                 }
                 setState(() {
-                  if (questionnumber < 2) {
-                    questionnumber = questionnumber + 1;
-                  }
+                  quizbrain.nextquestion();
                 });
               },
             ),
@@ -120,9 +114,3 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 }
-
-/*
-question1: 'You can lead a cow down stairs but not up stairs.', false,
-question2: 'Approximately one quarter of human bones are in the feet.', true,
-question3: 'A slug\'s blood is green.', true,
-*/
