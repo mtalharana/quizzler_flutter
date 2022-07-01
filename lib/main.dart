@@ -2,8 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:quizzler_flutter/quiz_brain.dart';
+// ignore: unused_import
 import 'package:rflutter_alert/rflutter_alert.dart';
+
 void main() => runApp(Quizzler());
+Quizbrain quizbrain = Quizbrain();
+int questionnumber = 0;
 
 class Quizzler extends StatelessWidget {
   @override
@@ -29,23 +33,29 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Widget> scorekeeper = [];
+
   void checkanswer(bool useranswer) {
     bool correctanswer = quizbrain.getanswer(questionnumber);
-    if (correctanswer == useranswer) {
-      scorekeeper.add(Icon(
-        Icons.check,
-        color: Colors.green,
-      ));
-    } else {
-      scorekeeper.add(Icon(Icons.close, color: Colors.red));
-    }
+
     setState(() {
+      if (quizbrain.isFinished() == true) {
+        Alert(context: context, title: "Restart ", desc: "Questions are ended.")
+            .show();
+        quizbrain.reset();
+        scorekeeper = [];
+      } else {  
+        if (correctanswer == useranswer) {
+          scorekeeper.add(Icon(
+            Icons.check,
+            color: Colors.green,
+          ));
+        } else {
+          scorekeeper.add(Icon(Icons.close, color: Colors.red));
+        }
+      }
       quizbrain.nextquestion();
     });
   }
-
-  Quizbrain quizbrain = Quizbrain();
-  int questionnumber = 0;
 
   @override
   Widget build(BuildContext context) {

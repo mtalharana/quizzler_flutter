@@ -32,4 +32,20 @@ Pakistan was the first Islamic country to become a nuclear power.''', a: true),
       _qnumber++;
     }
   }
+
+  bool isFinished() {
+    if (_qnumber >= (_paper.length - 1)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  int getpaperlength() {
+    return _paper.length - 1;
+  }
+
+  void reset() {
+    _qnumber = -1;
+  }
 }
