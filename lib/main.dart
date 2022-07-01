@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:quizzler_flutter/quiz_brain.dart';
-
+import 'package:rflutter_alert/rflutter_alert.dart';
 void main() => runApp(Quizzler());
 
 class Quizzler extends StatelessWidget {
@@ -29,6 +29,20 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Widget> scorekeeper = [];
+  void checkanswer(bool useranswer) {
+    bool correctanswer = quizbrain.getanswer(questionnumber);
+    if (correctanswer == useranswer) {
+      scorekeeper.add(Icon(
+        Icons.check,
+        color: Colors.green,
+      ));
+    } else {
+      scorekeeper.add(Icon(Icons.close, color: Colors.red));
+    }
+    setState(() {
+      quizbrain.nextquestion();
+    });
+  }
 
   Quizbrain quizbrain = Quizbrain();
   int questionnumber = 0;
@@ -70,15 +84,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool correctanswer = quizbrain.getanswer(questionnumber);
-                if (correctanswer == true) {
-                  print("Good");
-                } else {
-                  print("Bad");
-                }
-                setState(() {
-                  quizbrain.nextquestion();
-                });
+                checkanswer(true);
               },
             ),
           ),
@@ -96,15 +102,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool correctanswer = quizbrain.getanswer(questionnumber);
-                if (correctanswer == false) {
-                  print("Good");
-                } else {
-                  print("Bad");
-                }
-                setState(() {
-                  quizbrain.nextquestion();
-                });
+                checkanswer(false);
               },
             ),
           ),
