@@ -1,7 +1,11 @@
+// ignore_for_file: prefer_final_fields
+
 import 'question.dart';
 
 class Quizbrain {
-  int _qnumber = 0; // ignore: prefer_final_fields
+  int _qnumber = 0;
+  int _score = 0;
+
   final List<Question> _paper = [
     Question(
         q: 'The hijra is the term for the migration of Muhammad and his followers from Meccaw to Cairo.',
@@ -45,7 +49,16 @@ Pakistan was the first Islamic country to become a nuclear power.''', a: true),
     return _paper.length - 1;
   }
 
+  int getscore() {
+    return _score;
+  }
+
+  void addscore() {
+    _score++;
+  }
+
   void reset() {
     _qnumber = -1;
+    _score = 0;
   }
 }

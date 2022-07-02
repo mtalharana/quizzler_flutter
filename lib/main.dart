@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:quizzler_flutter/quiz_brain.dart';
-// ignore: unused_import
+
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 void main() => runApp(Quizzler());
@@ -39,12 +39,17 @@ class _QuizPageState extends State<QuizPage> {
 
     setState(() {
       if (quizbrain.isFinished() == true) {
-        Alert(context: context, title: "Restart ", desc: "Questions are ended.")
+        Alert(
+                context: context,
+                title: "Score is  ",
+                desc: quizbrain.getscore().toString())
             .show();
         quizbrain.reset();
         scorekeeper = [];
-      } else {  
+      } else {
         if (correctanswer == useranswer) {
+          quizbrain.addscore();
+
           scorekeeper.add(Icon(
             Icons.check,
             color: Colors.green,
